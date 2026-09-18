@@ -1,0 +1,5 @@
+order_id,customer_id,order_amount,order_date,customer_name,customer_country
+1001,501,239.45,2024-01-15,Aman,USA
+1002,502,89.1,2024-01-16,Ram,Canada
+1003,503,150.11,2024-01-17,Om,India
+1004,504,500.12,2024-01-18,Sai,USA
