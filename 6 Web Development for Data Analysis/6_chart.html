@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chart.js Tutorial</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        .chart-container {
+            width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>My First Chart</h2>
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- ✅ Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // JS will go here
+
+        // BAR CHART....
+        //     const ctx = document.getElementById('myChart');
+        //     new Chart(ctx, {
+        //         type: 'bar',
+        //         data: {
+        //         labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+        //         datasets: [{
+        //         label: 'Sales 2027',
+        //         data: [12, 19, 3, 5],
+        //         backgroundColor: ['red', 'blue', 'green', 'orange']
+        //         },
+        //         {
+        //         label: 'Sales 2028',
+        //         data: [2, 13, 33, 55],
+        //         backgroundColor: ['pink', 'aqua', 'yellow', 'brown']
+        //     }]
+        //   }});
+
+
+        // LINE CHART....
+        //     const ctx = document.getElementById('myChart');
+        //     new Chart(ctx, {
+        //         type: 'line',
+        //         data: {
+        //         labels: ['May', 'Jun', 'Jul', 'Aug'],
+        //         datasets: [{
+        //         label: 'Revenue',
+        //         data: [10, 20, 15, 25],
+        //         borderColor: 'blue',
+        //         fill: true
+        //     }]
+        //   }});
+
+
+        // PIE CHART....
+        //     const ctx = document.getElementById('myChart');
+        //     new Chart(ctx, {
+        //         type: 'pie',
+        //         data: {
+        //         labels: ['Red', 'Blue', 'Yellow'],
+        //         datasets: [{
+        //         data: [10, 20, 30],
+        //         backgroundColor: ['red', 'blue', 'yellow']
+        //     }]
+        //   }});
+
+
+        // DOUGHNUT CHART....
+        //     const ctx = document.getElementById('myChart');
+        //     new Chart(ctx, {
+        //         type: 'doughnut',
+        //         data: {
+        //         labels: ['A', 'B', 'C'],
+        //         datasets: [{
+        //         data: [30, 40, 30],
+        //         backgroundColor: ['purple', 'cyan', 'orange']
+        //     }]
+        //   }});
+
+
+        // RADAR CHART....
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Speed', 'Strength', 'Skill'],
+                datasets: [
+                    {
+                        label: 'Player 1',
+                        data: [80, 90, 70],
+                        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                        borderColor: 'blue',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Player 2',
+                        data: [70, 85, 95],
+                        backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                        borderColor: 'red',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
