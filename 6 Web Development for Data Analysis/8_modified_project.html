@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Project | Analytics Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #101d35, #1e3a5f);
+            color: white;
+            padding: 28px 7%;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .header-tag {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #dbeafe;
+        }
+
+        .header-content {
+            margin-top: 30px;
+            padding-bottom: 12px;
+        }
+
+        .header-content h1 {
+            font-size: clamp(27px, 4vw, 38px);
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+
+        .header-content p {
+            color: #cbd5e1;
+            font-size: 15px;
+            max-width: 600px;
+        }
+
+        /* COMPACT NAVBAR */
+        .navbar {
+            background: white;
+            padding: 10px 7%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 7px 13px;
+            border-radius: 7px;
+            transition: 0.25s;
+        }
+
+        .navbar a:hover {
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        /* MAIN CONTENT */
+        .main-container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 25px;
+        }
+
+        .section-heading {
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 24px;
+            color: #172554;
+            margin-bottom: 4px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* SUMMARY CARDS */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 38px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 13px;
+            padding: 22px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .summary-card .label {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .summary-card .amount {
+            font-size: 28px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .summary-card .description {
+            margin-top: 5px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .revenue-card {
+            border-top: 4px solid #2563eb;
+        }
+
+        .expenses-card {
+            border-top: 4px solid #16a34a;
+        }
+
+        .profit-card {
+            border-top: 4px solid #ef4444;
+        }
+
+        /* CHART CARDS */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .chart-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 14px;
+            padding: 24px;
+            min-width: 0;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+            scroll-margin-top: 85px;
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-title {
+            margin-bottom: 20px;
+        }
+
+        .chart-title h3 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+
+        .chart-title p {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+
+        .full-width .chart-container {
+            height: 350px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 30px;
+            background: #101d35;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .header {
+                padding: 24px 5%;
+            }
+
+            .navbar {
+                padding: 10px 4%;
+            }
+
+            .main-container {
+                padding: 25px 16px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-card.full-width {
+                grid-column: auto;
+            }
+
+            .chart-container,
+            .full-width .chart-container {
+                height: 300px;
+            }
+
+            .chart-card {
+                padding: 18px;
+            }
+
+            .summary-card .amount {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 21px;
+            }
+
+            .header-content h1 {
+                font-size: 27px;
+            }
+
+            .navbar a {
+                padding: 6px 9px;
+                font-size: 12px;
+            }
+
+            .chart-container,
+            .full-width .chart-container {
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">Data<span>View.</span></div>
+            <div class="header-tag">MINI PROJECT · ANALYTICS</div>
+        </div>
+
+        <div class="header-content">
+            <h1>Analytics Dashboard</h1>
+            <p>
+                Welcome to your data dashboard. Explore revenue, expenses,
+                profit and financial distribution through interactive charts.
+            </p>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#overview">Overview</a>
+        <a href="#line-chart">Line Chart</a>
+        <a href="#bar-chart">Bar Chart</a>
+        <a href="#pie-chart">Pie Chart</a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+            <div class="section-heading">
+                <h2>Financial Overview</h2>
+                <p>A quick look at your existing financial data.</p>
+            </div>
+
+            <div class="summary-grid">
+
+                <div class="summary-card revenue-card">
+                    <div class="label">REVENUE · JUNE</div>
+                    <div class="amount">₹80,000</div>
+                    <div class="description">Total revenue for June</div>
+                </div>
+
+                <div class="summary-card expenses-card">
+                    <div class="label">EXPENSES · JUNE</div>
+                    <div class="amount">₹45,000</div>
+                    <div class="description">Total expenses for June</div>
+                </div>
+
+                <div class="summary-card profit-card">
+                    <div class="label">PROFIT · JUNE</div>
+                    <div class="amount">₹35,000</div>
+                    <div class="description">Total profit for June</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CHARTS -->
+        <section>
+            <div class="section-heading">
+                <h2>Data Visualization</h2>
+                <p>Compare your existing data using three chart types.</p>
+            </div>
+
+            <div class="charts-grid">
+
+                <!-- LINE CHART -->
+                <div class="chart-card full-width" id="line-chart">
+                    <div class="chart-title">
+                        <h3>Revenue, Expenses &amp; Profit</h3>
+                        <p>Monthly financial performance · January to June</p>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- BAR CHART -->
+                <div class="chart-card" id="bar-chart">
+                    <div class="chart-title">
+                        <h3>Monthly Revenue</h3>
+                        <p>Revenue comparison across six months</p>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="myChart1"></canvas>
+                    </div>
+                </div>
+
+                <!-- PIE CHART -->
+                <div class="chart-card" id="pie-chart">
+                    <div class="chart-title">
+                        <h3>Financial Distribution</h3>
+                        <p>Reinvestment, salary and miscellaneous allocation</p>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Built with <span>Chart.js</span> | Analytics Dashboard Mini Project</p>
+    </footer>
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+        const ctx1 = document.getElementById('myChart1');
+        const ctx2 = document.getElementById('myChart2');
+
+        // ORIGINAL DATA — UNCHANGED
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+
+        const revenue = [50000, 60000, 55000, 70000, 75000, 80000];
+        const expenses = [30000, 35000, 32000, 40000, 42000, 45000];
+        const profit = [20000, 25000, 23000, 30000, 33000, 35000];
+
+        // LINE CHART — ORIGINAL DATA AND COLORS
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue,
+                    borderColor: 'blue',
+                    fill: true
+                },
+                {
+                    label: 'Expenses',
+                    data: expenses,
+                    borderColor: 'green',
+                    fill: true
+                },
+                {
+                    label: 'Profit',
+                    data: profit,
+                    borderColor: 'red',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // BAR CHART — ORIGINAL DATA AND COLORS
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue,
+                    backgroundColor: 'blue'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // PIE CHART — ORIGINAL LABELS, DATA AND COLORS
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Reinvestment 40%',
+                    'Salary 35%',
+                    'Miscelleneous 25%'
+                ],
+                datasets: [{
+                    data: [40, 35, 25],
+                    backgroundColor: ['blue', 'red', 'green']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+
+</body>
+</html>
