@@ -1,4 +1,4 @@
-# 📊 Data Analysis Portfolio
+# 📊 Data Analysis Profile
 
 <p align="center">
   <img src="https://img.shields.io/badge/Data%20Analysis-Portfolio-blue?style=for-the-badge" alt="Data Analysis Portfolio">
